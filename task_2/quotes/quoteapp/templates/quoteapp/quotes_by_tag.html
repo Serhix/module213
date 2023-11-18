@@ -1,0 +1,41 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            {% for quote in quotes %}
+            <div class="card border-primary mb-3">
+                <div class="card-body">
+                    <blockquote class="blockquote">
+                        <p class="card-text"> {{ quote.quote }} </p>
+                        <span> Author: <a href="{% url 'quoteapp:about_author' quote.author.id %}">{{ quote.author.fullname }}</a></span>
+                    </blockquote>
+                    <p class="card-text">Tags:
+                        {% for tag in quote.tags.all %}
+                        <a href="{% url 'quoteapp:quotes_by_tag' tag.name %}" class="badge bg-primary">{{ tag.name }}</a>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-2">
+            <div class="card border-primary mb-3">
+                <div class="card">
+                    <h2>Top Ten Tags</h2>
+                    <ul>
+                        {% for tag in top_tags %}
+                        <a href="{% url 'quoteapp:quotes_by_tag' tag.name %}" class="badge bg-primary">{{ tag.name }} ({{ tag.quote_count }})</a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "quoteapp/base.html" %}
+
+{% block content %}
+
+<h1>Click the button to start scraping</h1>
+<form action="{% url 'quoteapp:start_scraping' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Start Scraping</button>
+</form>
+{% endblock %}
