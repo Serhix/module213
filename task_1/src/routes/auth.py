@@ -154,6 +154,8 @@ async def reset_password_template(request: Request, db: Session = Depends(get_db
 
 @router.post("/reset_password/{token}", response_model=dict)
 async def reset_password(request: Request, new_password: str = Form(...), confirm_password: str = Form(...), db: Session = Depends(get_db)):
+    if new_password != confirm_password:
+        raise HTTPException (status_code=422, detail='Unprocessable Entity')
 
     try:
         token = request.path_params.get('token')

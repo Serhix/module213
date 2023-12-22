@@ -66,6 +66,6 @@ async def remove(contact_id: int, user: User, db: Session):
 async def get_upcoming_birthdays(limit: int, offset: int, user: User, db: Session):
     next_week = datetime.now().date() + timedelta(weeks=1)
     contacts = db.query(Contact).filter(
-        and_(Contact.user_id == user.id, Contact.birthday.between(datetime.now().date(), next_week))).limit(
-        limit).offset(offset)
+        and_(Contact.user_id == user.id, Contact.birthday >= datetime.now().date(), Contact.birthday <= next_week )).limit(
+        limit).offset(offset).all()
     return contacts
